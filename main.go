@@ -17,8 +17,13 @@ type MapRoom struct {
 
 func main() {
 	flag.Parse()
-	host := flag.Arg(0)
 
+	if flag.NArg() < 1 {
+		fmt.Print("Usage: robovac-rooms [hostname]\n")
+		os.Exit(1)
+	}
+
+	var host string = flag.Arg(0)
 	res, err := http.Get(fmt.Sprint("http://", host, "/api/v2/robot/capabilities/MapSegmentationCapability"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error making http request: %s\nMaking no changes.\n", err)
